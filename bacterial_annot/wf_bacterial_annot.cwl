@@ -53,18 +53,18 @@ steps:
     out: [proteins, lds2, seqids]
 
   # Skipped due to compute cost, for now
-  # hmmsearch:
-  #   run: wf_hmmsearch.cwl
-  #   in:
-  #     proteins: protein_extract/proteins
-  #     hmm_path: hmm_path
-  #     seqids: protein_extract/seqids
-  #     lds2: protein_extract/lds2
-  #     hmms_tab: hmms_tab
-  #     asn_cache: gp_getorf/asncache
-  #   out:
-  #     [hmm_hits]
-  #     #[strace]
+  hmmsearch:
+    run: wf_hmmsearch.cwl
+    in:
+      proteins: protein_extract/proteins
+      hmm_path: hmm_path
+      seqids: protein_extract/seqids
+      lds2: protein_extract/lds2
+      hmms_tab: hmms_tab
+      asn_cache: gp_getorf/asncache
+    out:
+      [hmm_hits]
+      #[strace]
 
   bacterial_hit_mapping:
     run: bacterial_hit_mapping.cwl
@@ -72,7 +72,8 @@ steps:
       seq_cache: gp_getorf/asncache
       unicoll_cache: uniColl_cache
       asn_cache: [gp_getorf/asncache, uniColl_cache]
-      hmm_hits: hmm_hits # Should be from hmmsearch
+      #hmm_hits: hmm_hits # Should be from hmmsearch
+      hmm_hits: hmmsearch/hmm_hits
       sequences: gp_getorf/outseqs
     out: [asncache, aligns]
 
